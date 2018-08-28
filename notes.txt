@@ -1,0 +1,54 @@
+Persist port values
+Move global tick to MapNode for generators? Or just use global tick at Map Node level, not node def
+Make all generators use global tick
+Automatic Variadic Inputs
+Graph 4/6-up (20x 6time series)
+Variadic Graph nodes display time series for each input
+Graph add Min, Max, Mean
+Graph and Plot nodes inherit from a common PanelDisplayNode, enabling global display pausing (with visual indicator on each panel)
+Pause individual PanelDisplayNodes?
+Aggregate PanelDisplayNode, one panel that tiles multiple 
+3-D Plot (trails; xyz and pitch,yaw,roll)
+Node Editor: initfn, flags (variadic, generator, display?, emitter?), nodeState
+Node Editor: Port Properties (type<enum>, default<type>, continuous<b>, address)
+Layout Persistence and Selection
+Close Panels on Node Deletion/Removal/Open
+Refactor node defns with prototypal inheritance
+Inheritable/shared nested ContainerMapNode definitions
+jsPlumb 1.7.4 or Multiple Drag
+Remove Panels on Node deleted
+Panel Titles Update on Node Title Change
+Enter to insert single node
+Reload node list when a node or mapping is saved
+Typed Port Editors
+
+Debounce Node
+
+Enum Port Type? String Port Type
+Fix backspace on port editor
+
+Blender
+Cue List
+Cue List UI
+
+Nodes:
+Average over time (Finite, Infinite)
+Window Smooth, Infinite Smooth:
+Decay (Finite, Infinite)
+Display?
+Hold
+Invert
+Negate
+Random
+Perlin
+Stop Watch
+Sample and Hold?
+LFO, not just sine (Square, Sawtooth (up, down), Triangle)
+Multiplex, Demultiplex
+Span, Splay (Select; integer and floating point... select an output and pass an input value through; split up the input into a bunch of 0..1 ranges that span the whole input range (specify min, max, and number of outputs?)) Float Select interpolates over inputs... that's just Span, right?
+Threshold?
+ToSigned, ToUnsigned?
+Integrate, Differentiate
+Counter?
+Segmenter (Value has to change by a certain threshold before the output changes)
+RectToPolar, PolarToRect?
