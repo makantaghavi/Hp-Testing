@@ -1,0 +1,522 @@
+{
+  "id": "74aceff0-c9dd-45df-81cd-405c92cbb3c2",
+  "nodes": {
+    "61a7bace-1ef4-41ca-baa2-fb6b237f8b8c": {
+      "nodetype": "Outlet",
+      "descr": "Allows publishing outputs of a ContainerMapNode.",
+      "x": 1281,
+      "y": 75,
+      "id": "61a7bace-1ef4-41ca-baa2-fb6b237f8b8c",
+      "inputs": {
+        "i1": {
+          "id": "83499328-aac9-4c9d-80a5-ad6c441e644b",
+          "value": {
+            "type": "Buffer",
+            "data": [47, 99, 117, 101, 115, 47, 100, 111, 112, 108, 97, 121, 0, 0, 0, 0, 44, 102, 0, 0, 63, 83, 51, 51]
+          },
+          "type": "INT"
+        }
+      },
+      "outputs": {
+        "o1": {
+          "id": "f8c4a0c6-6b9a-471c-a9e5-ff64e7cb9695",
+          "value": {
+            "type": "Buffer",
+            "data": [47, 99, 117, 101, 115, 47, 100, 111, 112, 108, 97, 121, 0, 0, 0, 0, 44, 102, 0, 0, 63, 83, 51, 51]
+          },
+          "type": "EXT"
+        }
+      },
+      "nodeName": "ToPlayOSC"
+    },
+    "4cc777a1-ca63-477a-88d3-ef66d2816cbb": {
+      "nodetype": "Inlet",
+      "descr": "Allows publishing inputs of a ContainerMapNode.",
+      "x": 44,
+      "y": 66,
+      "id": "4cc777a1-ca63-477a-88d3-ef66d2816cbb",
+      "inputs": {
+        "i1": {
+          "id": "c14ada9a-a3e5-4da7-affe-81930dd4fc7a",
+          "value": 0,
+          "type": "EXT"
+        }
+      },
+      "outputs": {
+        "o1": {
+          "id": "6944b3ef-792b-464a-8a2b-3fb09c4021a6",
+          "value": 0,
+          "type": "INT"
+        }
+      },
+      "nodeName": "GoPlay"
+    },
+    "ea77dda9-89d5-47ae-801c-f7fa510ec694": {
+      "nodetype": "OSCMessage-custom",
+      "x": 1066,
+      "y": 76,
+      "id": "ea77dda9-89d5-47ae-801c-f7fa510ec694",
+      "inputs": {
+        "bufIn": {
+          "id": "7fa39a20-c954-4db1-8f94-88e3fb322f62",
+          "type": "BUF"
+        },
+        "_cues_doplay": {
+          "id": "76ac591d-7818-4574-b772-d5ddfaf5483e",
+          "value": 0.8249999999999997,
+          "type": "FLOAT"
+        },
+        "_cues_dontplay": {
+          "id": "10c78311-e133-4d01-8c7c-c9526d0b4c3e",
+          "value": 0.1750000000000003,
+          "type": "FLOAT"
+        },
+        "_cues_caution": {
+          "id": "4c08c9ed-69b7-400c-a1ea-e8b67b604744",
+          "value": 0.3500000000000004,
+          "type": "FLOAT"
+        }
+      },
+      "outputs": {
+        "bufOut": {
+          "id": "452e3401-870b-4455-9241-eee1b1e8b4a5",
+          "value": {
+            "type": "Buffer",
+            "data": [47, 99, 117, 101, 115, 47, 99, 97, 117, 116, 105, 111, 110, 0, 0, 0, 44, 102, 0, 0, 62, 179, 51, 51]
+          },
+          "type": "BUF"
+        }
+      },
+      "nodeName": "",
+      "procfnStr": "function (ports, state, id, triggerPort) {\n    //called on new input\n    var msg;\n    if (triggerPort.name === \"bufIn\") {\n      msg = osc.fromBuffer(ports.bufIn.get());\n      var translated = msg.address.replace(/\\//g,'_');\n      if (ports.hasOwnProperty(translated)) {\n        ports[translated].set(msg.args);\n      }\n    } else {\n      msg = osc.toBuffer({\n        address: \"\"+triggerPort.name.replace(/_/g, '/'),\n        args: [ triggerPort.get() ]\n      });\n      ports.bufOut.set(msg);\n    }\n  }"
+    },
+    "8fddd604-b578-4462-9e3d-811d4a4819fe": {
+      "nodetype": "Scale",
+      "descr": "Manually or automatically scales a node to the specified range",
+      "x": 461,
+      "y": 69,
+      "id": "8fddd604-b578-4462-9e3d-811d4a4819fe",
+      "inputs": {
+        "value": {
+          "id": "35340364-d508-45e6-93e1-91767b651437",
+          "value": "0.3700000000000001",
+          "type": "FLOAT"
+        },
+        "inMin": {
+          "id": "60fe9b19-cc97-47ed-8b99-39c0caa1f7a0",
+          "value": ".3",
+          "type": "FLOAT"
+        },
+        "inMax": {
+          "id": "72879f63-91d6-4435-83bd-864b775e1640",
+          "value": ".7",
+          "type": "FLOAT"
+        },
+        "outMin": {
+          "id": "dea2acd7-2395-4d2c-a74b-e1e7cbde8664",
+          "value": 0,
+          "type": "FLOAT"
+        },
+        "outMax": {
+          "id": "68eeae9f-7560-4fc0-beb0-b6f37176f0ee",
+          "value": 1,
+          "type": "FLOAT"
+        },
+        "autoScale": {
+          "id": "fd14116c-8207-4b14-ad05-27589c5f11ae",
+          "value": false,
+          "type": "BOOL"
+        },
+        "reset": {
+          "id": "598f3caa-9993-4c77-a825-97bb9e0733ae",
+          "value": false,
+          "type": "BOOL"
+        }
+      },
+      "outputs": {
+        "scaled": {
+          "id": "8a82d357-9fde-4947-9dae-dc285195f4c3",
+          "value": 0.1750000000000003,
+          "type": "FLOAT"
+        }
+      },
+      "nodeName": ""
+    },
+    "f75c3b03-b98e-4105-82bd-0fc0dbfe444a": {
+      "nodetype": "Scale",
+      "descr": "Manually or automatically scales a node to the specified range",
+      "x": 459,
+      "y": 219,
+      "id": "f75c3b03-b98e-4105-82bd-0fc0dbfe444a",
+      "inputs": {
+        "value": {
+          "id": "d6d6f1b7-482a-4c3d-a674-3d76c7dbf418",
+          "value": "0.3700000000000001",
+          "type": "FLOAT"
+        },
+        "inMin": {
+          "id": "e51317e4-e8da-49c2-a990-e9afc1e67ef6",
+          "value": ".5",
+          "type": "FLOAT"
+        },
+        "inMax": {
+          "id": "f6dd10a8-9253-409b-9061-ac67a2349650",
+          "value": ".7",
+          "type": "FLOAT"
+        },
+        "outMin": {
+          "id": "1930b8ad-e6a8-4ab2-a5dd-92ddced39b2a",
+          "value": "0",
+          "type": "FLOAT"
+        },
+        "outMax": {
+          "id": "106ee96f-fe0d-4ad5-b019-90babf907251",
+          "value": "1",
+          "type": "FLOAT"
+        },
+        "autoScale": {
+          "id": "a8f4d3b8-2f34-4d9f-85d8-7018dee6faf1",
+          "value": false,
+          "type": "BOOL"
+        },
+        "reset": {
+          "id": "1f27c878-e01d-4c6a-a8bf-3c3877b37b25",
+          "value": false,
+          "type": "BOOL"
+        }
+      },
+      "outputs": {
+        "scaled": {
+          "id": "875f61da-a39d-46f4-8a79-35d2e3d4c3a4",
+          "value": "-0.64999999999999960",
+          "type": "FLOAT"
+        }
+      },
+      "nodeName": ""
+    },
+    "94f1567d-b21c-4e35-b9b5-e04494b94568": {
+      "nodetype": "Scale",
+      "descr": "Manually or automatically scales a node to the specified range",
+      "x": 458,
+      "y": 378,
+      "id": "94f1567d-b21c-4e35-b9b5-e04494b94568",
+      "inputs": {
+        "value": {
+          "id": "1a81f71d-5cdb-4708-aadf-324330d2ff77",
+          "value": "0.3700000000000001",
+          "type": "FLOAT"
+        },
+        "inMin": {
+          "id": "fbe7b2a9-15fd-4aca-9ce7-aa59f2f3be73",
+          "value": ".3",
+          "type": "FLOAT"
+        },
+        "inMax": {
+          "id": "902055a3-bcd7-40bb-b4af-e104f2b03222",
+          "value": ".7",
+          "type": "FLOAT"
+        },
+        "outMin": {
+          "id": "e8319e12-505f-472a-b98f-4b54880ef87f",
+          "value": 0,
+          "type": "FLOAT"
+        },
+        "outMax": {
+          "id": "f44985f1-c919-4d4e-b4e3-fa5095f36d87",
+          "value": 1,
+          "type": "FLOAT"
+        },
+        "autoScale": {
+          "id": "d3240f3f-9158-4a5c-8509-9c1ba2cf91e9",
+          "value": false,
+          "type": "BOOL"
+        },
+        "reset": {
+          "id": "0dbdb06a-b1a7-46c6-b22c-0fe8edae14c8",
+          "value": false,
+          "type": "BOOL"
+        }
+      },
+      "outputs": {
+        "scaled": {
+          "id": "fd026e65-750b-4582-bc04-e208e3667040",
+          "value": 0.1750000000000003,
+          "type": "FLOAT"
+        }
+      },
+      "nodeName": ""
+    },
+    "dcc8acaf-ce8c-4d98-8070-a3548aece4e3": {
+      "nodetype": "Abs",
+      "descr": "The absolute value of the input",
+      "x": 631,
+      "y": 222,
+      "id": "dcc8acaf-ce8c-4d98-8070-a3548aece4e3",
+      "inputs": {
+        "value": {
+          "id": "7b64856d-f9bd-46be-8dc8-2c381f40ba03",
+          "value": "-0.64999999999999960",
+          "type": "FLOAT"
+        }
+      },
+      "outputs": {
+        "abs": {
+          "id": "ada9c605-fe7c-4995-90b5-113d06abf752",
+          "value": 0.6499999999999996,
+          "type": "FLOAT"
+        }
+      },
+      "nodeName": ""
+    },
+    "5014de2b-c33a-4f55-b3c8-bdfff0fefbe6": {
+      "nodetype": "Invert",
+      "descr": "Inverts the input value",
+      "x": 767,
+      "y": 221,
+      "id": "5014de2b-c33a-4f55-b3c8-bdfff0fefbe6",
+      "inputs": {
+        "i1": {
+          "id": "b9f131ce-db0e-46d0-933b-3a8e0dfa8014",
+          "value": 0.6499999999999996,
+          "type": "FLOAT"
+        }
+      },
+      "outputs": {
+        "o1": {
+          "id": "e87db3e1-615d-4518-99ef-fbdce971bc03",
+          "value": 0.3500000000000004,
+          "type": "FLOAT"
+        }
+      },
+      "nodeName": ""
+    },
+    "caf054bd-9eb7-4948-a562-871e2aa1354d": {
+      "nodetype": "Invert",
+      "descr": "Inverts the input value",
+      "x": 758,
+      "y": 376,
+      "id": "caf054bd-9eb7-4948-a562-871e2aa1354d",
+      "inputs": {
+        "i1": {
+          "id": "d205717e-4b91-475e-8d2a-4374b76f2dd9",
+          "value": 0.1750000000000003,
+          "type": "FLOAT"
+        }
+      },
+      "outputs": {
+        "o1": {
+          "id": "a2990a38-f129-4627-95b3-32a7890f870e",
+          "value": 0.8249999999999997,
+          "type": "FLOAT"
+        }
+      },
+      "nodeName": ""
+    },
+    "d5aa73f8-524a-4410-927a-612890a54d2e": {
+      "nodetype": "Clip",
+      "descr": "Clip an input value within a range",
+      "x": 885,
+      "y": 161,
+      "id": "d5aa73f8-524a-4410-927a-612890a54d2e",
+      "inputs": {
+        "value": {
+          "id": "e649f1a4-4482-4e38-a4b6-34d058dc4153",
+          "value": 0.3500000000000004,
+          "type": "FLOAT"
+        },
+        "min": {
+          "id": "41dbceb1-0b1d-4e8f-8f87-72562fad8178",
+          "value": 0,
+          "type": "FLOAT"
+        },
+        "max": {
+          "id": "9dc43a64-1a7f-4880-a5c2-590a18a87329",
+          "value": 1,
+          "type": "FLOAT"
+        }
+      },
+      "outputs": {
+        "clipped": {
+          "id": "8a09e65f-14fc-4142-b962-a6a14607cd5b",
+          "value": 0.3500000000000004,
+          "type": "FLOAT"
+        }
+      },
+      "nodeName": ""
+    },
+    "f45c7c90-65eb-48a0-9356-77ff596ee88a": {
+      "nodetype": "Clip",
+      "descr": "Clip an input value within a range",
+      "x": 878,
+      "y": 74,
+      "id": "f45c7c90-65eb-48a0-9356-77ff596ee88a",
+      "inputs": {
+        "value": {
+          "id": "bb1541f9-6883-4b1e-a478-3af0c7ba1b0c",
+          "value": 0.1750000000000003,
+          "type": "FLOAT"
+        },
+        "min": {
+          "id": "4c3e78fd-44ef-4bb5-bc7d-b09e78ca38ac",
+          "value": 0,
+          "type": "FLOAT"
+        },
+        "max": {
+          "id": "4ba474d2-af7d-48ae-892d-26121948a97a",
+          "value": 1,
+          "type": "FLOAT"
+        }
+      },
+      "outputs": {
+        "clipped": {
+          "id": "049da3d5-3594-418e-8fda-24b6f863f4a5",
+          "value": 0.1750000000000003,
+          "type": "FLOAT"
+        }
+      },
+      "nodeName": ""
+    },
+    "9d32da76-fa2a-43b5-9b95-1ea10a8f9274": {
+      "nodetype": "Clip",
+      "descr": "Clip an input value within a range",
+      "x": 892,
+      "y": 244,
+      "id": "9d32da76-fa2a-43b5-9b95-1ea10a8f9274",
+      "inputs": {
+        "value": {
+          "id": "0d8cb2ed-cbf4-45bd-938e-bf618c3848d8",
+          "value": 0.8249999999999997,
+          "type": "FLOAT"
+        },
+        "min": {
+          "id": "c83be3dc-63d2-47b5-8590-fecd2f813803",
+          "value": 0,
+          "type": "FLOAT"
+        },
+        "max": {
+          "id": "7b7f4e7e-fcfb-4845-baf6-7010f1ff4fe8",
+          "value": 1,
+          "type": "FLOAT"
+        }
+      },
+      "outputs": {
+        "clipped": {
+          "id": "dc82fc1f-3f7a-44ff-9578-ad818bee92a5",
+          "value": 0.8249999999999997,
+          "type": "FLOAT"
+        }
+      },
+      "nodeName": ""
+    },
+    "ff7b620f-8be2-4c47-a38a-7406510ea428": {
+      "nodetype": "Clip",
+      "descr": "Clip an input value within a range",
+      "x": 178,
+      "y": 37,
+      "id": "ff7b620f-8be2-4c47-a38a-7406510ea428",
+      "inputs": {
+        "value": {
+          "id": "d6b3137b-35d7-4975-a74f-e57e42749f66",
+          "value": "0.3700000000000001",
+          "type": "FLOAT"
+        },
+        "min": {
+          "id": "5f72d7ef-da2b-4827-aea9-e0deac3b4a90",
+          "value": 0,
+          "type": "FLOAT"
+        },
+        "max": {
+          "id": "f73f23e8-1f30-4505-89de-4cbacf16e209",
+          "value": 1,
+          "type": "FLOAT"
+        }
+      },
+      "outputs": {
+        "clipped": {
+          "id": "9eb2ffbf-6641-48e2-aae6-ae1be77f9eab",
+          "value": "0.3700000000000001",
+          "type": "FLOAT"
+        }
+      },
+      "nodeName": ""
+    }
+  },
+  "connections": {
+    "0a608f20-6803-4dcf-96bf-f067be22bd44": {
+      "o": "452e3401-870b-4455-9241-eee1b1e8b4a5",
+      "i": "83499328-aac9-4c9d-80a5-ad6c441e644b"
+    },
+    "7f805dbb-4c3f-446c-8005-ac17f951cfb8": {
+      "o": "fd026e65-750b-4582-bc04-e208e3667040",
+      "i": "d205717e-4b91-475e-8d2a-4374b76f2dd9"
+    },
+    "679a8b75-3a63-42cd-a5a9-282f1bb297d4": {
+      "o": "875f61da-a39d-46f4-8a79-35d2e3d4c3a4",
+      "i": "7b64856d-f9bd-46be-8dc8-2c381f40ba03"
+    },
+    "1ff84d5a-8ff8-47bf-a03f-86e2c3c732f7": {
+      "o": "ada9c605-fe7c-4995-90b5-113d06abf752",
+      "i": "b9f131ce-db0e-46d0-933b-3a8e0dfa8014"
+    },
+    "d92bc412-e9a9-4352-93dc-bab1581f8d42": {
+      "o": "a2990a38-f129-4627-95b3-32a7890f870e",
+      "i": "0d8cb2ed-cbf4-45bd-938e-bf618c3848d8"
+    },
+    "bb410052-24ba-4f1f-964f-69af22e9d814": {
+      "o": "dc82fc1f-3f7a-44ff-9578-ad818bee92a5",
+      "i": "76ac591d-7818-4574-b772-d5ddfaf5483e"
+    },
+    "347ab837-d86c-42c4-80d8-36787b0fc264": {
+      "o": "e87db3e1-615d-4518-99ef-fbdce971bc03",
+      "i": "e649f1a4-4482-4e38-a4b6-34d058dc4153"
+    },
+    "758e94e6-8593-47f4-adcc-d08fdbb8b76d": {
+      "o": "8a09e65f-14fc-4142-b962-a6a14607cd5b",
+      "i": "4c08c9ed-69b7-400c-a1ea-e8b67b604744"
+    },
+    "0e6b6a4b-a46d-4d94-ae0e-19c9c1bd84ba": {
+      "o": "8a82d357-9fde-4947-9dae-dc285195f4c3",
+      "i": "bb1541f9-6883-4b1e-a478-3af0c7ba1b0c"
+    },
+    "08d6340d-39f4-4b13-a7b7-3645467ad267": {
+      "o": "049da3d5-3594-418e-8fda-24b6f863f4a5",
+      "i": "10c78311-e133-4d01-8c7c-c9526d0b4c3e"
+    },
+    "eed8846c-1827-463e-9919-20218aa7be05": {
+      "o": "9eb2ffbf-6641-48e2-aae6-ae1be77f9eab",
+      "i": "35340364-d508-45e6-93e1-91767b651437"
+    },
+    "2182af72-32e7-4d82-93a4-84b2e9da6fdc": {
+      "o": "9eb2ffbf-6641-48e2-aae6-ae1be77f9eab",
+      "i": "d6d6f1b7-482a-4c3d-a674-3d76c7dbf418"
+    },
+    "2519e04f-56ae-4906-8223-966a432c7e0d": {
+      "o": "9eb2ffbf-6641-48e2-aae6-ae1be77f9eab",
+      "i": "1a81f71d-5cdb-4708-aadf-324330d2ff77"
+    },
+    "868d5a76-993e-4cba-bf85-97b238e33b44": {
+      "o": "6944b3ef-792b-464a-8a2b-3fb09c4021a6",
+      "i": "d6b3137b-35d7-4975-a74f-e57e42749f66"
+    }
+  },
+  "inputs": {
+    "GoPlay": {
+      "id": "c14ada9a-a3e5-4da7-affe-81930dd4fc7a",
+      "value": 0
+    }
+  },
+  "outputs": {
+    "ToPlayOSC": {
+      "id": "f8c4a0c6-6b9a-471c-a9e5-ff64e7cb9695",
+      "value": {
+        "type": "Buffer",
+        "data": [47, 99, 117, 101, 115, 47, 100, 111, 112, 108, 97, 121, 0, 0, 0, 0, 44, 102, 0, 0, 63, 83, 51, 51]
+      }
+    }
+  },
+  "nodetype": "ContainerMapNode",
+  "descr": "A container for a sub mapping.",
+  "x": 1169.5,
+  "y": 193.5,
+  "fileRef": "fd_playgate.hpm"
+}

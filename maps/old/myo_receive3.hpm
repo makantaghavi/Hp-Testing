@@ -1,0 +1,151 @@
+{
+  "id": "df6f1e0c-0a9f-49bb-8047-3837dda6f6e4",
+  "nodes": {
+    "f31f5085-64ee-44bd-b2b2-f82d67f62279": {
+      "nodetype": "UDPTransceiver",
+      "descr": "Receives and sends UDP datagrams ",
+      "x": 8,
+      "y": 456.625,
+      "id": "f31f5085-64ee-44bd-b2b2-f82d67f62279",
+      "inputs": {
+        "bufIn": "d8afc70f-bcc3-48d4-b921-eba8fe69c46d",
+        "sendHost": "5d8b3bc5-6365-43d6-8cd7-53dac0869640",
+        "sendPort": "d46566d9-4df7-4101-9722-887ab02911b6",
+        "listenPort": "ea04b584-70dd-421f-98fd-ca2a62fd9bbb"
+      },
+      "outputs": {
+        "bufOut": "b48ef479-a10c-4690-84d1-b8c932c299af",
+        "pktTime": "9247241b-cace-4410-8e9c-54cc31effc3d"
+      },
+      "nodeName": ""
+    },
+    "7cdcdeb4-90fa-4d8f-b1dc-e25e387dca98": {
+      "nodetype": "Graph",
+      "descr": "This will graph this signal on Graph",
+      "x": 552,
+      "y": 63,
+      "id": "7cdcdeb4-90fa-4d8f-b1dc-e25e387dca98",
+      "inputs": {
+        "in": "ca7579a3-835a-4bea-995c-870b8f49f5f1",
+        "scaledIn": "da6f5252-9455-4e3f-930e-faf132579dc2"
+      },
+      "outputs": {
+        "out": "52e25d0d-d7b4-42a5-9411-ff3857862e8d"
+      },
+      "nodeName": ""
+    },
+    "ebcc1646-034e-4337-aac6-afe9865fe023": {
+      "nodetype": "Graph",
+      "descr": "This will graph this signal on Graph",
+      "x": 548,
+      "y": 159,
+      "id": "ebcc1646-034e-4337-aac6-afe9865fe023",
+      "inputs": {
+        "in": "5e5014a2-6a19-41eb-86cb-b49fa520f8e7",
+        "scaledIn": "25839efd-9cc3-4246-a8d8-9b8e2ba6fbb0"
+      },
+      "outputs": {
+        "out": "1acb4c2d-6824-4953-8e75-88ec602e9ee7"
+      },
+      "nodeName": ""
+    },
+    "1574770f-8c78-4127-866d-fa4504a0f945": {
+      "nodetype": "ArgSplitter-custom",
+      "x": 550,
+      "y": 226,
+      "id": "1574770f-8c78-4127-866d-fa4504a0f945",
+      "inputs": {
+        "argIn": "2157cdc2-a1fd-4c4d-af8e-2ff03b1c4e14"
+      },
+      "outputs": {
+        "0": "b04e450c-b909-41ea-a5ce-ca8e52d98387",
+        "1": "32ffe6d3-f070-4e38-badf-e42c575cd863",
+        "2": "16936ee7-1612-4041-9a48-272ef56cbaad"
+      },
+      "nodeName": "",
+      "procfnStr": "function ( ports, state, id, triggerPort) {\n    var input = ports.argIn.get();\n    for (var i = 0; i < input.length ; i++) {\n      if (ports.hasOwnProperty(i)) {\n        ports[i].set(input[i].value);\n      }\n    }\n  }"
+    },
+    "f6fad581-408e-4d26-8def-5e7bb642f315": {
+      "nodetype": "OSCFilter-custom",
+      "x": 209,
+      "y": 247.75,
+      "id": "f6fad581-408e-4d26-8def-5e7bb642f315",
+      "inputs": {
+        "bufIn": "1749c21c-0024-4ef8-89cc-0fb22689702c",
+        "oscIn": "59816179-72e7-4c6e-84c2-349bd97d570f"
+      },
+      "outputs": {
+        "bufOut": "096e7cc1-1ba8-4452-a4d3-d9932a8aaa07",
+        "_vln1": "c0b2989b-0491-44f4-bccc-b3abca7517f9",
+        "_vln2": "aa2a3066-9c98-4cb5-a0aa-84c6e15b0e2f",
+        "_viola": "f7c08c80-3b68-493e-aefe-203bf779223c",
+        "_cello": "553a8083-8af1-4ac8-89ab-bff59f320cef",
+        "_bass": "493dd1d2-6d89-48b9-bec1-b6a9d0cbc28d",
+        "_cl1": "749c1291-5851-4f62-be2d-506f0060c4c9",
+        "_cl2": "2b6d087a-a611-40f1-8d02-824c8a79f9f5",
+        "_tuba": "f8ae8a3a-26b1-4d75-ba63-c9fb54a94b98",
+        "_keys": "fdce21f5-5890-40ab-8d31-5eefe8374cb5",
+        "_perc": "3030a4e9-e5ef-4659-9642-862a262720ad"
+      },
+      "nodeName": "",
+      "procfnStr": "function (ports, state, id, triggerPort) {\n    var msg;\n    if (triggerPort.name === \"bufIn\") {\n      msg = osc.fromBuffer(ports.bufIn.get());\n    }\n    else {\n      msg = ports.oscIn.get();\n    }\n    var translated = msg.address.replace(/\\//g,'_');\n    for (var prefix in ports) {\n      if (translated.startsWith(prefix)) {\n        msg.address = msg.address.substr(prefix.length);\n        ports[prefix].set(msg);\n        break;\n      }\n    }\n  }"
+    },
+    "ebc988ef-4110-4760-b571-cb9ccee08220": {
+      "nodetype": "OSCFilter-custom",
+      "x": 501,
+      "y": 347.75,
+      "id": "ebc988ef-4110-4760-b571-cb9ccee08220",
+      "inputs": {
+        "bufIn": "92f612ea-4f6c-4598-ac50-4b5526dc169e",
+        "oscIn": "b53b3e68-15e2-4418-9066-548d28f7fde3"
+      },
+      "outputs": {
+        "bufOut": "ad6d4457-5195-4469-901d-f5b6237f05b7",
+        "_myo_quat_left": "ae33e0d8-41d3-4542-bf71-cc56d80a8a34",
+        "_myo_quat_right": "b660b071-b31f-46bc-a882-25c653070966",
+        "_myo_acc_left": "a48fa593-c24b-4333-98b2-a988619dc8a7",
+        "_myo_acc_right": "6b9388e1-6ef8-45b9-a590-181ccf8fc113"
+      },
+      "nodeName": "",
+      "procfnStr": "function (ports, state, id, triggerPort) {\n    var msg;\n    if (triggerPort.name === \"bufIn\") {\n      msg = osc.fromBuffer(ports.bufIn.get());\n    }\n    else {\n      msg = ports.oscIn.get();\n    }\n    var translated = msg.address.replace(/\\//g,'_');\n    for (var prefix in ports) {\n      if (translated.startsWith(prefix)) {\n        msg.address = msg.address.substr(prefix.length);\n        ports[prefix].set(msg);\n        break;\n      }\n    }\n  }"
+    },
+    "8fa87a12-a5bf-40e7-ae90-00ec5070d5c1": {
+      "nodetype": "OSCMessage",
+      "descr": "Receives and sends UDP datagrams ",
+      "x": 1138,
+      "y": 78,
+      "id": "8fa87a12-a5bf-40e7-ae90-00ec5070d5c1",
+      "inputs": {
+        "bufIn": "c238ad55-2e36-4b1a-839c-a9a33c57c8ad"
+      },
+      "outputs": {
+        "bufOut": "7ae96930-ff8a-4587-9b82-9813fac1e559"
+      },
+      "nodeName": ""
+    }
+  },
+  "connections": {
+    "d0541a70-e6cb-40bf-9db3-5dc212f7f2f4": {
+      "o": "b48ef479-a10c-4690-84d1-b8c932c299af",
+      "i": "1749c21c-0024-4ef8-89cc-0fb22689702c"
+    },
+    "7ce9438b-5e50-419f-9197-7832d1a24846": {
+      "o": "2b6d087a-a611-40f1-8d02-824c8a79f9f5",
+      "i": "b53b3e68-15e2-4418-9066-548d28f7fde3"
+    },
+    "5c94f214-edb3-4466-a4ae-a33c3fa88281": {
+      "o": "ae33e0d8-41d3-4542-bf71-cc56d80a8a34",
+      "i": "4697fc9e-b0a7-4f9b-a08c-7695089df4cd"
+    },
+    "851ee61b-d4f4-4918-8b9c-4c5283a5c0d7": {
+      "o": "e92867da-99b0-4015-ba4c-67e976937991",
+      "i": "da6f5252-9455-4e3f-930e-faf132579dc2"
+    }
+  },
+  "inputs": {},
+  "outputs": {},
+  "nodetype": "ContainerMapNode",
+  "descr": "A container for a sub mapping.",
+  "x": 0,
+  "y": 0
+}
